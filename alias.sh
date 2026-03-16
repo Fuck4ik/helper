@@ -4,7 +4,10 @@ GIST_URL="https://gist.githubusercontent.com/Fuck4ik/f0a0c6f9b19b2c0a4cfcc42fb02
 
 install_aliases() {
   echo "Installing aliases and functions..."
-  curl -s $GIST_URL -o ~/.omasn_bash_helper
+  if ! curl -sf $GIST_URL -o ~/.omasn_bash_helper; then
+    echo "Error: Failed to download aliases. Please check your internet connection." >&2
+    return 1
+  fi
   if ! grep -q "source ~/.omasn_bash_helper" ~/.bashrc; then
     echo "source ~/.omasn_bash_helper" >> ~/.bashrc
   fi
@@ -14,7 +17,10 @@ install_aliases() {
 
 update_aliases() {
   echo "Updating aliases and functions..."
-  curl -s $GIST_URL -o ~/.omasn_bash_helper
+  if ! curl -sf $GIST_URL -o ~/.omasn_bash_helper; then
+    echo "Error: Failed to download aliases. Please check your internet connection." >&2
+    return 1
+  fi
   source ~/.bashrc
   echo "Aliases and functions updated successfully."
 }
